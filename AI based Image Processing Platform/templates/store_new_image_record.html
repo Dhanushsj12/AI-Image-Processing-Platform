@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Store New Image Record</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+    .background {
+      height: 100vh;
+      width: 100%;
+      background-image: url(Images/Bulebackground.jpg);
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px 9px #d3d3d3;
+      width: 100%;
+      max-width: 500px;
+    }
+    .input-box {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .button {
+      width: 150px;
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(to right, rgb(1,134,218), rgb(182,49,167));
+      color: white;
+      border: none;
+      outline: none;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+    .button:hover {
+      transform: scale(1.1);
+    }
+    #imagePreview {
+      display: none;
+      margin-top: 10px;
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px;
+    }
+
+    .flash-message {
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .flash-message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .flash-message.danger {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <div class="container">
+      <h2>Store New Image Record</h2>
+
+      <!-- Flash message block -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="flash-message {{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST" enctype="multipart/form-data">
+        <input type="text" class="input-box" name="imageTitle" placeholder="Enter Image Title" required>
+        <input type="file" class="input-box" id="imageUpload" name="imageUpload" accept="image/*" onchange="previewImage()" required>
+        <img id="imagePreview" alt="Image Preview">
+        <textarea class="input-box" name="imageDescription" placeholder="Enter Image Description (Optional)"></textarea>
+        <br>
+        <button type="submit" class="button">Save</button>
+        <button type="button" class="button" onclick="window.location.href='{{ url_for('main') }}'">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function previewImage() {
+      const file = document.getElementById('imageUpload').files[0];
+      const preview = document.getElementById('imagePreview');
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          preview.src = event.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Share and Download</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    body {
+      background-image: url(Images/Bulebackground.jpg); /* Ensure this path exists */
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px 9px #d3d3d3;
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .description-box {
+      border: 2px ridge #ccc;
+      padding: 15px;
+      margin-bottom: 30px;
+      background-color: #f9f9f9;
+      text-align: left;
+      font-size: 16px;
+      color: #444;
+    }
+
+    .button {
+      width: 180px;
+      padding: 10px;
+      margin: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(to right, rgb(1,134,218), rgb(182,49,167));
+      color: white;
+      border: none;
+      outline: none;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .actions form {
+      display: inline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Share Image</h1>
+
+    <h2>{{ image['title'] }}</h2>
+
+    <img src="{{ image['image_url'] }}" alt="Image">
+
+    <div class="description-box">
+      <strong>Description:</strong><br>
+      {{ image['description'] }}
+    </div>
+
+    <div class="actions">
+      <button class="button" onclick="copyLink()">Copy Link</button>
+
+      <a href="{{ image['image_url'] }}" download>
+        <button class="button">Download Image</button>
+      </a>
+
+      <a href="{{ image['image_url'] }}" target="_blank">
+        <button class="button">Open in New Tab</button>
+      </a>
+
+      <a href="{{ url_for('share_with_friends', image_id=image['id']) }}">
+        <button class="button">Share with Friends</button>
+      </a>
+
+      <a href="{{ url_for('share_gallery') }}">
+        <button class="button">Back to Gallery</button>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    function copyLink() {
+      navigator.clipboard.writeText("{{ image['image_url'] }}")
+        .then(() => alert("Link copied to clipboard!"));
+    }
+  </script>
+</body>
+</html>

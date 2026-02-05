@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Share & Download Gallery</title>
+  <style>
+    body {
+      background: #f0f2f5;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .gallery a {
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      padding: 5px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: 0.3s;
+      background: white;
+    }
+
+    .gallery a:hover {
+      transform: scale(1.08);
+      border-color: steelblue;
+    }
+
+    img {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .back-button {
+      margin-top: 40px;
+    }
+
+    .gradient-button {
+      padding: 10px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(to right, rgb(1,134,218), rgb(182,49,167));
+      color: white;
+      border: none;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .gradient-button:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Image Sharing & Downloading</h1>
+
+    <div class="gallery">
+      {% for img in images %}
+        <a href="{{ url_for('share_and_download', image_id=img['id']) }}">
+          <img src="{{ img['image_url'] }}" alt="{{ img['title'] }}">
+        </a>
+      {% endfor %}
+    </div>
+
+    <div class="back-button">
+      <a href="{{ url_for('main') }}">
+        <button class="gradient-button">Back</button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

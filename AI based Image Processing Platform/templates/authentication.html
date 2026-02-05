@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login / Signup</title>
+
+<style>
+body {
+    font-family: sans-serif;
+    background: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth-container {
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px #ccc;
+    width: 320px;
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: linear-gradient(to right, rgb(1,134,218), rgb(182,49,167));
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.toggle-link {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.toggle-link a {
+    text-decoration: none;
+    color: rgb(1,134,218);
+}
+
+.message {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.success { color: green; }
+.danger { color: red; }
+
+</style>
+</head>
+
+<body>
+
+<div class="auth-container">
+
+<h2 id="formTitle">Login</h2>
+
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <p class="message {{ category }}">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+<form id="authForm" method="POST" action="/login">
+
+<input type="email" name="email" placeholder="Email" required>
+
+<input type="password" name="password" placeholder="Password" required>
+
+<button type="submit" id="submitButton">Login</button>
+
+</form>
+
+<div class="toggle-link">
+<p id="toggleText">
+Don't have an account?
+<a href="#" onclick="toggleForm(event)">Sign Up</a>
+</p>
+</div>
+
+</div>
+
+<script>
+
+function toggleForm(e) {
+    e.preventDefault();
+
+    const formTitle = document.getElementById('formTitle');
+    const submitButton = document.getElementById('submitButton');
+    const toggleText = document.getElementById('toggleText');
+    const authForm = document.getElementById('authForm');
+
+    if (formTitle.innerText === "Login") {
+
+        formTitle.innerText = "Sign Up";
+        submitButton.innerText = "Sign Up";
+        authForm.action = "/signup";
+
+        toggleText.innerHTML =
+        'Already have an account? <a href="#" onclick="toggleForm(event)">Login</a>';
+
+    } else {
+
+        formTitle.innerText = "Login";
+        submitButton.innerText = "Login";
+        authForm.action = "/login";
+
+        toggleText.innerHTML =
+        'Don\'t have an account? <a href="#" onclick="toggleForm(event)">Sign Up</a>';
+    }
+}
+
+</script>
+
+</body>
+</html>

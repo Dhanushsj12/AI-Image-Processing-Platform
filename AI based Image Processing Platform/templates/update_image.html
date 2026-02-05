@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Image</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    body {
+      background-image: url(Images/Bulebackground.jpg);
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px 9px #d3d3d3;
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 30px;
+      font-size: 24px;
+      color: #333;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 100%;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    textarea {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    .button {
+      width: 150px;
+      padding: 10px;
+      margin: 10px auto 0;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(to right, rgb(1,134,218), rgb(182,49,167));
+      color: white;
+      border: none;
+      outline: none;
+      border-radius: 30px;
+      transition: 0.3s;
+    }
+
+    .button:hover {
+      transform: scale(1.1);
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Update Data Entries</h2>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="text" name="title" value="{{ image['title'] }}" required>
+      <textarea name="description">{{ image['description'] }}</textarea>
+      <input type="file" name="image">
+
+      <div class="button-container">
+        <button type="submit" class="button">Save Changes</button>
+        <button type="button" class="button" onclick="window.location.href='{{ url_for('view_image_detail', image_id=image_id) }}'">Cancel</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

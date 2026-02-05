@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Share with Friends</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    body {
+      background-image: url(Images/Bulebackground.jpg); /* Match your style */
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px 9px #d3d3d3;
+      width: 90%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: bold;
+      color: #222;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(to right, rgb(1,134,218), rgb(182,49,167));
+      color: white;
+      border: none;
+      outline: none;
+      border-radius: 30px;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .results {
+      margin-top: 30px;
+    }
+
+    .results h3 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .results form {
+      display: inline-block;
+      margin: 10px;
+    }
+
+    .back-button {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Select Friend to Share</h1>
+
+    <form method="POST">
+      <input type="text" name="search_email" placeholder="Enter email to search" required>
+      <br>
+      <button type="submit">Search</button>
+    </form>
+
+    {% if results %}
+      <div class="results">
+        <h3>Results:</h3>
+        {% for email in results %}
+          <form method="POST" action="{{ url_for('send_image_to_friend', image_id=image_id) }}">
+            <input type="hidden" name="recipient_email" value="{{ email }}">
+            <button type="submit">Send to {{ email }}</button>
+          </form>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="back-button">
+      <a href="{{ url_for('share_and_download', image_id=image_id) }}">
+        <button>Back</button>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
